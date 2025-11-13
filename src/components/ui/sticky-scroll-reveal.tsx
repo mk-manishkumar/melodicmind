@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useRef } from "react";
-import { useMotionValueEvent, useScroll } from "framer-motion";
-import { motion } from "framer-motion";
+import { useMotionValueEvent, useScroll, motion } from "framer-motion";
 
 export const StickyScroll = ({
   content,
@@ -19,14 +19,17 @@ export const StickyScroll = ({
   });
   const cardLength = content.length;
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const cardsBreakpoints = content.map((_, index) => index / cardLength);
-    cardsBreakpoints.forEach((breakpoint, index) => {
-      if (latest > breakpoint - 0.2 && latest <= breakpoint) {
-        setActiveCard(() => index);
-      }
-    });
-  });
+useMotionValueEvent(scrollYProgress, "change", (latest) => {
+  const cardsBreakpoints = content.map((_, index) => index / cardLength);
+
+  for (const [index, breakpoint] of cardsBreakpoints.entries()) {
+    if (latest > breakpoint - 0.2 && latest <= breakpoint) {
+      setActiveCard(index);
+      break; 
+    }
+  }
+});
+
 
   const backgroundColors = ["var(--slate-900)", "var(--black)", "var(--neutral-900)"];
   const linearGradients = ["linear-gradient(to bottom right, var(--cyan-500), var(--emerald-500))", "linear-gradient(to bottom right, var(--pink-500), var(--indigo-500))", "linear-gradient(to bottom right, var(--orange-500), var(--yellow-500))"];
@@ -35,7 +38,7 @@ export const StickyScroll = ({
       animate={{
         backgroundColor: backgroundColors[activeCard % backgroundColors.length],
       }}
-      className="h-[30rem] overflow-y-auto flex justify-center relative space-x-10 rounded-md p-10"
+      className="h-120 overflow-y-auto flex justify-center relative space-x-10 rounded-md p-10"
       ref={ref}
     >
       <div className="div relative flex items-start px-4">
