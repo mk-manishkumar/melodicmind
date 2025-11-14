@@ -2,10 +2,8 @@
 "use client";
 import { cn } from "@/utils/cn";
 import React, { useEffect, useRef } from "react";
-// import { createNoise3D } from "simplex-noise";
 
 export const WavyBackground = ({ children, className, containerClassName, colors, waveWidth, backgroundFill, blur = 10, speed = "fast", waveOpacity = 0.5, ...props }: { children?: any; className?: string; containerClassName?: string; colors?: string[]; waveWidth?: number; backgroundFill?: string; blur?: number; speed?: "slow" | "fast"; waveOpacity?: number; [key: string]: any }) => {
-  // const noise = createNoise3D();
   let w: number, h: number, nt: number, i: number, x: number, ctx: any, canvas: any;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const getSpeed = () => {
@@ -42,7 +40,7 @@ export const WavyBackground = ({ children, className, containerClassName, colors
       ctx.lineWidth = waveWidth || 50;
       ctx.strokeStyle = waveColors[i % waveColors.length];
       for (x = 0; x < w; x += 5) {
-        const y = (x / 800, 0.3 * i, nt) * 100;
+        const y = (nt) * 100;
         ctx.lineTo(x, y + h * 0.5); // adjust for height, currently at 50% of the container
       }
       ctx.stroke();
